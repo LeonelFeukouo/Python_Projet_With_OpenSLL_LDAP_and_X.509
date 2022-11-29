@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>TEKUP-chat</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+
+        <script>
+            function register(){
+                document.getElementById("login").style.display = "none";
+                document.getElementById("register").style.display = "block";
+            }
+
+            function login(){
+                document.getElementById("login").style.display = "block";
+                document.getElementById("register").style.display = "none";
+            }
+        </script>
+    </head>
+
+    <body>
+        <div id="login" class="center">
+            <h1>Login</h1>
+            <form method="post">
+                <div class="txt_field">
+                    <input type="text" required>
+                    <span></span>
+                    <label>Pseudo (Login)</label>
+                </div>
+                <div class="txt_field">
+                    <input type="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <div class="pass">Forgot Password?</div>
+                <input type="submit" value="Login">
+                <div class="signup_link">
+                    Not a member? <a href="#" onclick="register()">Signup</a>
+                </div>
+            </form>
+        </div>
+
+        <div id="register" class="center" style="display: none;">
+            <h1>Register</h1>
+            <form method="post">
+                <div class="txt_field">
+                    <input type="number" required>
+                    <span></span>
+                    <label>Card Number</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required>
+                    <span></span>
+                    <label>Name</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required>
+                    <span></span>
+                    <label>Surname</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required>
+                    <span></span>
+                    <label>Pseudo (Login)</label>
+                </div>
+                <div class="txt_field">
+                    <input type="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <div class="txt_field">
+                    <input type="password" required>
+                    <span></span>
+                    <label>Confirm Password</label>
+                </div>
+                <input type="submit" value="Register">
+                <div class="signup_link">
+                    Are you a member? <a href="#" onclick="login()">Signin</a>
+                </div>
+            </form>
+        </div>
+
+    </body>
+</html>
