@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}
+{% if title %}
+TEKUP-chat - {{ title}}
+{% else %}
+TEKUP-chat
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="login" class="center">
+            <h1>Login</h1>
+            <form action="/check_credential" method="post">
+                <div class="txt_field">
+                    <input type="text" required>
+                    <span></span>
+                    <label>Pseudo (Login)</label>
+                </div>
+                <div class="txt_field">
+                    <input type="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <div class="pass">Forgot Password?</div>
+                <input type="submit" value="Login">
+                <div class="signup_link">
+                    Not a member? <a href="{{ url_for('inscription', title='inscription') }}">Signup</a>
+                </div>
+            </form>
+        </div>
+{% endblock %}

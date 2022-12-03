@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}
+{% if title %}
+TEKUP-chat - {{ title}}
+{% else %}
+TEKUP-chat
+{% endif %}
+{% endblock %}
+
+{% block content %}
+ <div id="register" class="center">
+            <h1>Register</h1>
+            <form action="/signin" method="post">
+                <div class="txt_field">
+                    <input type="number" required>
+                    <span></span>
+                    <label>Card Number</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required>
+                    <span></span>
+                    <label>Name</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required>
+                    <span></span>
+                    <label>Surname</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required>
+                    <span></span>
+                    <label>Pseudo (Login)</label>
+                </div>
+                <div class="txt_field">
+                    <input type="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <div class="txt_field">
+                    <input type="password" required>
+                    <span></span>
+                    <label>Confirm Password</label>
+                </div>
+                <input type="submit" value="Register">
+                <div class="signup_link">
+                    Are you a member? <a href="{{ url_for('login', title='login') }}">LogIn</a>
+                </div>
+            </form>
+        </div>
+{% endblock %}

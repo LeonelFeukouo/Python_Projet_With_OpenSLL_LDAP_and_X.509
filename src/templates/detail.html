@@ -1,0 +1,126 @@
+{% extends "home.html" %}
+{% block title %}
+{% if title %}
+TEKUP-chat-detail - {{ title}}
+{% else %}
+TEKUP-chat
+{% endif %}
+{% endblock %}
+
+{% block discussion %}
+<div class="col-9" id="ClickUser" style="display: block;">
+                    <div class="wa-navbar">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-1">
+                                    <a href="#" onclick="back()"><span class="material-symbols-outlined wa-icon">arrow_back</span></a>
+                                </div>
+                                <div class="col-1">
+                                    <img src="{{ url_for('static', filename='images/profile.png') }}" class="rounded-circle">
+                                </div>
+                                <div class="col-8">
+                                    <div style="margin-top: 10px">
+                                        <span style="font-size: 12px">Christ</span><br>
+                                        <span style="font-size: 12px">En ligne a 13:50</span>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    <a href="#" onclick="notYet()"><i class="large material-icons wa-icon">search</i></a>
+                                    <a href="#" onclick="notYet()"><i class="large material-icons wa-icon">attach_file</i></a>
+                                </div>
+                                <div class="col-1">
+                                    <div class="dropdown">
+                                        <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="large material-icons wa-icon">more_vert</i>
+                                        </a>
+
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="#">Informations du contact</a>
+                                            <a class="dropdown-item" href="#">Fermer la discussion</a>
+                                            <a class="dropdown-item" href="#">Supprimer la discussion</a>
+                                            <a class="dropdown-item" href="#">Signaler</a>
+                                            <a class="dropdown-item" href="#">Bloquer chat</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="wa-chat">
+                        <div>
+                            <br><br>
+                            <div class="row">
+                                <div class="offset-2 col-8">
+                                    <div style="text-align: center">
+                                        <div class="card wa-card-chat wa-card-yellow">
+                                            <span class="material-symbols-outlined"   style="text-align: right;">lock</span>
+                                            <span  style="position: absolute;">Les messages sont chiffrer de bout en bout. Aucun tiers, pas meme TEK-UP_Chat, ne peut les lire ou les ecouter.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row">
+                                <div class="offset-6 col-5">
+                                    <div class="card wa-card-chat wa-card-green">
+                                        Hello!!!
+                                        <div style="text-align: right">
+                                            <span>11:00</span>
+                                            <i class="large material-icons wa-icon wa-chat-icon">done_all</i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="card wa-card-chat wa-card-default">
+                                        Bonjour !!!
+                                        <div style="text-align: right">
+                                            <span>11:10</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br/>
+                            <div class="row">
+                                <div class="offset-6 col-5">
+                                    <div class="card wa-card-chat wa-card-green">
+                                        Bonjour Leonel!!!
+                                        <div style="text-align: right">
+                                            <span>14:02</span>
+                                            <i class="large material-icons wa-icon wa-chat-icon">done_all</i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="wa-panel-texto">
+                        <div style="text-align: center">
+                            <div class="row">
+                                <div class="col-1">
+                                    <a href="#" onclick="notYet()"><i class="large material-icons wa-icon">mood</i></a>
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control wa-input" id="ContenuMessage" placeholder="Ecrire un message" oninput="inputChange()">
+                                </div>
+                                <div class="col-1" id="micro">
+                                    <a href="#" onclick="notYet()"><i class="large material-icons wa-icon">mic</i></a>
+                                </div>
+                                <div class="col-1" id="send" style="display: none;">
+                                    <a href="#" onclick="notYet()"><i class="material-symbols-outlined wa-icon">send</i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+{% endblock %}
