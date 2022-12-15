@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, redirect, request, flash
+from flask import Blueprint, render_template, url_for, redirect, request, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user
 from .models import User
@@ -25,6 +25,8 @@ def login_post():
         flash('veillez verifier vos information et recommencer encore !!!', 'danger')
         return redirect(url_for('auth.login'))
     login_user(user, remember=remember)
+    session['name'] = user.name
+    session['room'] = user.pseudo
     return redirect(url_for('main.index'))
 
 
@@ -58,5 +60,7 @@ def signup_post():
 @login_required
 def logout():
     logout_user()
+    session['name'] = ''
+    session['room'] = ''
     flash(f' deconnection !!! ', 'success')
     return redirect(url_for('auth.login'))

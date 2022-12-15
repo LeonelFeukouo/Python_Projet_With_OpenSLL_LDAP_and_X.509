@@ -1,11 +1,14 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_socketio import SocketIO
 
 db = SQLAlchemy()
+async_mode = None
+socketio = SocketIO()
 
 
-def create_app():
+def create_app(debug=False):
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = 'mysecretkey'
@@ -22,6 +25,7 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+
     from . import models
 
     with app.app_context():
@@ -34,5 +38,5 @@ def create_app():
     # blueprint for non-auth parts of app
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
-
+    socketio.init_app(app)
     return app
