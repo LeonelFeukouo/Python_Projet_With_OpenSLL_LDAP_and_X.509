@@ -1,12 +1,13 @@
 from flask import Flask
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_socketio import SocketIO
 
 db = SQLAlchemy()
 async_mode = None
-socketio = SocketIO()
-
+socketio = SocketIO(manage_session=False)
+session = Session()
 
 def create_app(debug=False):
     app = Flask(__name__)
@@ -14,7 +15,7 @@ def create_app(debug=False):
     app.config['SECRET_KEY'] = 'mysecretkey'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tchat.sqlite3'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
+    app.config['SESSION_TYPE'] = 'filesystem'
     db.init_app(app)
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -38,5 +39,6 @@ def create_app(debug=False):
     # blueprint for non-auth parts of app
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
+    session.init_app(app)
     socketio.init_app(app)
     return app

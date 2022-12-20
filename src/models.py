@@ -22,8 +22,8 @@ class Message(db.Model):
     isRead = db.Column(db.Boolean, default=False, nullable=False)
     createAt = db.Column(db.TIMESTAMP, default=datetime.now, nullable=False)
     deleteAt = db.Column(db.Date)
-    author_id = db.Column(db.Integer, db.ForeignKey(User.id))
-    destination_id = db.Column(db.Integer, db.ForeignKey(User.id))
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    destination_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship("User", backref="user", uselist=False, foreign_keys=[author_id])
     destination = db.relationship("User", backref="reference", uselist=False, foreign_keys=[destination_id])
 

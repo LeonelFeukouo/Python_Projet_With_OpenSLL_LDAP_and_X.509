@@ -25,8 +25,9 @@ def login_post():
         flash('veillez verifier vos information et recommencer encore !!!', 'danger')
         return redirect(url_for('auth.login'))
     login_user(user, remember=remember)
-    session['name'] = user.name
+    session['pseudo'] = user.pseudo
     session['room'] = user.pseudo
+    session['global_room'] = 'salon'
     return redirect(url_for('main.index'))
 
 

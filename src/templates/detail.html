@@ -8,6 +8,7 @@ TEKUP-chat
 {% endblock %}
 
 {% block discussion %}
+
 <div class="col-9" id="ClickUser" style="display: block;">
                     <div class="wa-navbar">
                         <div class="container">
@@ -20,7 +21,7 @@ TEKUP-chat
                                 </div>
                                 <div class="col-8">
                                     <div style="margin-top: 10px">
-                                        <span style="font-size: 12px">Christ</span><br>
+                                        <span id="span_Id_dest" style="font-size: 12px">{% if messages %}{{ messages.user_dest.pseudo }}{% endif %}</span><br>
                                         <span style="font-size: 12px">En ligne a 13:50</span>
                                     </div>
                                 </div>
@@ -49,7 +50,7 @@ TEKUP-chat
                     </div>
 
                     <div class="wa-chat">
-                        <div>
+                        <div id='message_test'>
                             <br><br>
                             <div class="row">
                                 <div class="offset-2 col-8">
@@ -63,41 +64,36 @@ TEKUP-chat
                             </div>
                             <br>
 
-                            <div class="row">
-                                <div class="offset-6 col-5">
-                                    <div class="card wa-card-chat wa-card-green">
-                                        Hello!!!
-                                        <div style="text-align: right">
-                                            <span>11:00</span>
-                                            <i class="large material-icons wa-icon wa-chat-icon">done_all</i>
+                            {% if messages %}
+                                {% for msg in messages.message %}
+                                    {% if msg.author_id|int == current_user.get_id()|int %}
+                                        <div class="row">
+                                            <div class="offset-6 col-5">
+                                                <div class="card wa-card-chat wa-card-green">
+                                                   {{ msg.content }}
+                                                    <div style="text-align: right">
+                                                        <span>{{ msg.createAt }}</span>
+                                                        <i class="large material-icons wa-icon wa-chat-icon">done_all</i>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    {% else %}
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <div class="card wa-card-chat wa-card-default">
+                                                    {{ msg.content }}
+                                                    <div style="text-align: right">
+                                                        <span>{{ msg.createAt }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <br/>
+                                {% endfor %}
+                            {% endif %}
 
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="card wa-card-chat wa-card-default">
-                                        Bonjour !!!
-                                        <div style="text-align: right">
-                                            <span>11:10</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <br/>
-                            <div class="row">
-                                <div class="offset-6 col-5">
-                                    <div class="card wa-card-chat wa-card-green">
-                                        Bonjour Leonel!!!
-                                        <div style="text-align: right">
-                                            <span>14:02</span>
-                                            <i class="large material-icons wa-icon wa-chat-icon">done_all</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
 
@@ -113,11 +109,14 @@ TEKUP-chat
                                     <input type="text" class="form-control wa-input" id="ContenuMessage" placeholder="Ecrire un message" oninput="inputChange()">
                                 </div>
                                 <div class="col-1" id="micro">
-                                    <a href="#" onclick="notYet()"><i class="large material-icons wa-icon">mic</i></a>
+                                    <a href="#" onclick="getapi()"><i class="large material-icons wa-icon">mic</i></a>
                                 </div>
                                 <div class="col-1" id="send" style="display: none;">
-                                    <a href="#" onclick="notYet()"><i class="material-symbols-outlined wa-icon">send</i></a>
+                                    <a href="#" onclick="send_message()"><i class="material-symbols-outlined wa-icon">send</i></a>
                                 </div>
+                                <input type="hidden" id="author" name="author" value="{{ current_user.get_id() }}">
+                                <input type="hidden" id="dest" name="dest" value="{{ messages.user_dest.id }}">
+                                <input type="hidden" id="dest_pseudo" name="dest" value="{{ messages.user_dest.pseudo }}">
                             </div>
                         </div>
 
