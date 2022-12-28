@@ -65,7 +65,8 @@ TEKUP-chat
                             <br>
 
                             {% if messages %}
-                                {% for msg in messages.message %}
+                                {% set ToutMessages  =  messages.message | sort(attribute="createAt") %}
+                                {% for msg in ToutMessages %}
                                     {% if msg.author_id|int == current_user.get_id()|int %}
                                         <div class="row">
                                             <div class="offset-6 col-5">
