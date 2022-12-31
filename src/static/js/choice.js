@@ -6,7 +6,7 @@ new TomSelect('#select-repo',{
 		// fetch remote data
 		load: function(query, callback) {
 
-			var url = 'http://127.0.0.1:5000/search/' + encodeURIComponent(query);
+			var url = 'https://127.0.0.1:5000/search/' + encodeURIComponent(query);
 			fetch(url)
 				.then(response => response.json())
 				.then(json => {

@@ -20,13 +20,16 @@ sio.on('status', (data)=>{
     console.log(data)
 })
 sio.on('receive', (data)=>{
+    let content = ''
     console.log(data)
-    let element =
+    sio.emit('decrypt', {sid: sio.id, datas: [data['signature'], data['msg_content'],data['author_id'],data['destination_id']]}, (result) =>{
+        console.log(result)
+        let element =
         `
         <div class="row">
             <div class="col-5">
                 <div class="card wa-card-chat wa-card-default">`+
-                    data['msg_content'] +` 
+                    result +` 
                     <div style="text-align: right">
                         <span>`+data['msg_date']+`</span>
                     </div>
@@ -35,6 +38,8 @@ sio.on('receive', (data)=>{
         </div>
         `
     document.getElementById('message_test').innerHTML +=element;
+    });
+
 })
 sio.on('i_send_message', (data)=>{
     let element =

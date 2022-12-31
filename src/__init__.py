@@ -41,4 +41,5 @@ def create_app(debug=False):
     app.register_blueprint(main_blueprint)
     session.init_app(app)
     socketio.init_app(app)
+    app.run(ssl_context=('Certificates/ca.crt', 'Certificates/ca.key'))
     return app

@@ -3,8 +3,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user
 from .models import User
 from . import db
+from . import serverLDAP
+import subprocess
+from . import CertReq as CertRequest
+from . import CertReqMake as MakeCert
 
 auth = Blueprint('auth', __name__)
+server_ldap = "192.168.1.32"
 
 
 @auth.route('/login')
@@ -24,6 +29,11 @@ def login_post():
     if not user or not check_password_hash(user.password, password):
         flash('veillez verifier vos information et recommencer encore !!!', 'danger')
         return redirect(url_for('auth.login'))
+    ldapresponse = serverLDAP.user_authentication(server_ldap, pseudo, password)
+    if ldapresponse != True:
+        flash(ldapresponse, 'danger')
+        return redirect(url_for('auth.login'))
+
     login_user(user, remember=remember)
     session['pseudo'] = user.pseudo
     session['room'] = user.pseudo
@@ -49,10 +59,27 @@ def signup_post():
     if user:
         flash(f' le pseudo {user.pseudo} existe deja', 'danger')
         return redirect(url_for('auth.signup'))
-    new_user = User(surname=surname, name=name, pseudo=pseudo,
-                    password=generate_password_hash(password, method='sha256'))
+    new_user = User(id=number, surname=surname, name=name, pseudo=pseudo,
+                    password=generate_password_hash(password, method='md5'))
+    cmd = "slappasswd -s " + password + " -h {MD5} > passwd.txt"
+    subprocess.call(cmd, shell=True)
+    # with open('myfile', "w") as outfile:
+    #     subprocess.call(['slappasswd', '-s', password, '-h', '{MD5}'], stdout=outfile)
+
+    f = open("passwd.txt", "r")
+    listes_line = f.readlines()
+    f.close()
+    ldapPass = listes_line[0].strip()
+    print(f'pass lda = {ldapPass}')
+    ldap_response = serverLDAP.user_add(server_ldap, new_user.pseudo, new_user.surname, new_user.name, str(ldapPass))
+    if ldap_response != True:
+        flash(f' le pseudo {new_user.pseudo} existe deja sur le server ldap', 'danger')
+        return redirect(url_for('auth.signup'))
+
     db.session.add(new_user)
     db.session.commit()
+    CertRequest.MakeReq(number, pseudo)
+    MakeCert.MakeCert(number)
     flash(f' le pseudo {new_user.pseudo} est bien enregistré', 'success')
     return redirect(url_for('auth.login'))
 
